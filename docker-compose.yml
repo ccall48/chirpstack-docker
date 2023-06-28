@@ -1,8 +1,9 @@
 version: "3"
 
+name: helium
 services:
   chirpstack:
-    image: chirpstack/chirpstack:4
+    image: chirpstack/chirpstack:${VERSION}
     command: -c /etc/chirpstack
     restart: unless-stopped
     volumes:
@@ -13,24 +14,149 @@ services:
       - mosquitto
       - redis
     environment:
-      - MQTT_BROKER_HOST=mosquitto
-      - REDIS_HOST=redis
-      - POSTGRESQL_HOST=postgres
+      - MQTT_BROKER_HOST=${MQTT_BROKER_HOST}
+      - REDIS_HOST=${REDIS_HOST}
+      - POSTGRESQL_HOST=${POSTGRESQL_HOST}
     ports:
       - 8080:8080
 
-  chirpstack-gateway-bridge-eu868:
-    image: chirpstack/chirpstack-gateway-bridge:4
+  chirpstack-gateway-bridge-as923:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
     restart: unless-stopped
     ports:
       - 1700:1700/udp
     volumes:
-      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
-    depends_on: 
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-as923.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-as923_2:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-as923_2.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-as923_3:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-as923_3.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-as923_4:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-as923_4.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-au915_1:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-au915_1.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-eu868:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-eu868.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge/toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-in865:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-in865.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-kr920:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-kr920.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
+      - mosquitto
+
+  chirpstack-gateway-bridge-us915_1:
+    image: chirpstack/chirpstack-gateway-bridge:${VERSION}
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge/cs-gwb-us915_1.toml:/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - INTEGRATION__MQTT__AUTH__GENERIC__SERVERS=tcp://${MQTT_BROKER_HOST}
+      - INTEGRATION__MQTT__AUTH__GENERIC__USERNAME=${MQTT_USER}
+      - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD=${MQTT_PASS}
+    depends_on:
       - mosquitto
 
   chirpstack-rest-api:
-    image: chirpstack/chirpstack-rest-api:4
+    image: chirpstack/chirpstack-rest-api:${VERSION}
     restart: unless-stopped
     command: --server chirpstack:8080 --bind 0.0.0.0:8090 --insecure
     ports:
@@ -45,7 +171,7 @@ services:
       - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
       - postgresqldata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
 
   redis:
     image: redis:7-alpine
@@ -58,9 +184,14 @@ services:
     restart: unless-stopped
     ports:
       - 1883:1883
-    volumes: 
+    volumes:
       - ./configuration/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
 volumes:
   postgresqldata:
   redisdata:
+
+networks:
+  default:
+    name: core-infra
+    external: true
