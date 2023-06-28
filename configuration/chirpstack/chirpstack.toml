@@ -19,7 +19,7 @@
   #  * require - Always SSL (skip verification)
   #  * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
   #  * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
-  dsn="postgres://chirpstack:$POSTGRES_PASS@$POSTGRESQL_HOST/chirpstack?sslmode=disable"
+  dsn="postgres://chirpstack:chirpstack@$POSTGRESQL_HOST/chirpstack?sslmode=disable"
 
   # Max open connections.
   #
@@ -72,9 +72,8 @@
   net_id="00003C"
 
   # List devAddr range you own
-  # dev_addr_prefixes=["78000020/29"]
   dev_addr_prefixes=[
-    "$DEVADDR_START/$DEVADDR_PREFIX"
+    "78000020/29"
   ]
 
   # Enabled regions.
@@ -142,7 +141,7 @@
     #  * require - Always SSL (skip verification)
     #  * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
     #  * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
-    #dsn="postgresql://chirpstack_integration:$POSTGRES_PASS@$POSTGRESQL_HOST/chirpstack_integration?sslmode=disable"
+    #dsn="postgresql://chirpstack_integration:chirpstack_integration@$POSTGRESQL_HOST/chirpstack_integration?sslmode=disable"
 
     # Max open connections.
     #
@@ -159,6 +158,7 @@
   # adding postgres integration *- not created by default -*
   # https://www.chirpstack.io/docs/chirpstack/integrations/postgresql.html
 
+
 # Backend Interfaces configuration (optional).
 [backend_interfaces]
 
@@ -166,7 +166,7 @@
   #
   # Note: this interface is used both for passive-roaming and when
   # integrating with Join Servers that implement the async interface.
-  bind="0.0.0.0:8080"
+  bind="0.0.0.0:8181"
 
   # CA certificate (path).
   ca_cert=""
