@@ -53,27 +53,18 @@
   # instance.
   cluster=false
 
-# Global gateway configuration.
-# Please note that backend configuration can be found in the per-region
-# configuration.
-[gateway]
-
-  # Allow unknown gateways.
-  #
-  # If set to true, then uplinks received from gateways not configured in
-  # ChirpStack will be allowed.
-  allow_unknown_gateways=true
-
 
 # Network related configuration.
 [network]
 
   # Network identifier (NetID, 3 bytes) encoded as HEX (e.g. 010203).
-  net_id="00003C"
+  # new helium net_id="00003C"
+  net_id="$HELIUM_NET_ID"
 
-  # List devAddr range you own
+  # Helium 8 block dev address prefix 29
   dev_addr_prefixes=[
-    "78000020/29"
+    #"78000020/29"
+    "$DEV_ADDR_PREFIX_1",
   ]
 
   # Enabled regions.
@@ -82,6 +73,7 @@
   # the 'name' parameter of the region configuration in '[[regions]]'.
   enabled_regions=[
     "as923",
+    "as923_1c", # added for new zealand / to test
     "as923_2",
     "as923_3",
     "as923_4",
@@ -116,10 +108,24 @@
   secret="$CHIRPSTACK_SECRET"
 
 
+# Global gateway configuration.
+# Please note that backend configuration can be found in the per-region
+# configuration.
+[gateway]
+  client_cert_lifetime="12months"
+  ca_cert="/etc/chirpstack/certs/ca.pem"
+  ca_key="/etc/chirpstack/certs/ca-key.pem"
+  # Allow unknown gateways.
+  #
+  # If set to true, then uplinks received from gateways not configured in
+  # ChirpStack will be allowed.
+  allow_unknown_gateways=true
+
+
 [integration]
   enabled=[
     "mqtt",
-  #  "postgresql"
+    "postgresql",
   ]
 
   [integration.mqtt]
@@ -129,8 +135,15 @@
     json=true
 
 
+    [integration.mqtt.client]
+      client_cert_lifetime="12months"
+      ca_cert="/etc/chirpstack/certs/ca.pem"
+      ca_key="/etc/chirpstack/certs/ca-key.pem"
+
+
+
   # PostgreSQL integration configuration.
-  #[integration.postgresql]
+  [integration.postgresql]
 
     # PostgreSQL DSN.
     #
@@ -141,38 +154,38 @@
     #  * require - Always SSL (skip verification)
     #  * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
     #  * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
-    #dsn="postgresql://chirpstack_integration:chirpstack_integration@$POSTGRESQL_HOST/chirpstack_integration?sslmode=disable"
+    dsn="postgresql://chirpstack_integration:chirpstack_integration@$POSTGRESQL_HOST/chirpstack_integration?sslmode=disable"
 
     # Max open connections.
     #
     # This sets the max. number of open connections that are allowed in the
     # PostgreSQL connection pool.
-    #max_open_connections=10
+    max_open_connections=10
 
     # Min idle connections.
     #
     # This sets the min. number of idle connections in the PostgreSQL connection
     # pool (0 = equal to max_open_connections).
-    #min_idle_connections=0
+    min_idle_connections=0
 
   # adding postgres integration *- not created by default -*
   # https://www.chirpstack.io/docs/chirpstack/integrations/postgresql.html
 
 
-# Backend Interfaces configuration (optional).
-[backend_interfaces]
-
-  # interface:port to bind the Backend Interfaces API to.
-  #
-  # Note: this interface is used both for passive-roaming and when
-  # integrating with Join Servers that implement the async interface.
-  bind="0.0.0.0:8181"
-
-  # CA certificate (path).
-  ca_cert=""
-
-  # TLS certificate (path).
-  tls_cert=""
-
-  # TLS key (path).
-  tls_key=""
+## Backend Interfaces configuration (optional).
+#[backend_interfaces]
+#
+#  # interface:port to bind the Backend Interfaces API to.
+#  #
+#  # Note: this interface is used both for passive-roaming and when
+#  # integrating with Join Servers that implement the async interface.
+#  bind="0.0.0.0:8181"
+#
+#  # CA certificate (path).
+#  ca_cert=""
+#
+#  # TLS certificate (path).
+#  tls_cert=""
+#
+#  # TLS key (path).
+#  tls_key=""
