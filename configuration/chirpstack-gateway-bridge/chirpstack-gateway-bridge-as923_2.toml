@@ -13,9 +13,9 @@
 
 # # Passed as environment variables from compose file.
 #[integration.mqtt.auth.generic]
-#servers=["tcp://mosquitto:1883"]
-#username=""
-#password=""
+#servers=["tcp://$MQTT_BROKER_HOST:1883"]
+#username="$MQTT_USER"
+#password="$MQTT_PASS"
 
 [integration.mqtt]
 event_topic_template="as923_2/gateway/{{ .GatewayID }}/event/{{ .EventType }}"

@@ -90,7 +90,8 @@
   # the same uplink frame. Please note that this value affects the
   # roundtrip time. The total roundtrip time (which includes network latency)
   # must be less than the (first) receive-window.
-  deduplication_delay="200ms"
+  #deduplication_delay="200ms"
+  deduplication_delay="250ms"
 
 
 # API interface configuration.
@@ -133,10 +134,8 @@
     server="tcp://$MQTT_BROKER_HOST:1883/"
     # Connect with the given username (optional)
     username="$MQTT_USER"
-    #username=""
     # Connect with the given password (optional)
     password="$MQTT_PASS"
-    #password=""
     json=true
 
 
