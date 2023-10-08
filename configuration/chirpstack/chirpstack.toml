@@ -90,8 +90,8 @@
   # the same uplink frame. Please note that this value affects the
   # roundtrip time. The total roundtrip time (which includes network latency)
   # must be less than the (first) receive-window.
-  #deduplication_delay="200ms"
-  deduplication_delay="250ms"
+  deduplication_delay="200ms"
+  #deduplication_delay="250ms"
 
 
 # API interface configuration.
