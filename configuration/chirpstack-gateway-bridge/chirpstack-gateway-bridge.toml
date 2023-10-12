@@ -1,12 +1,20 @@
 # See https://www.chirpstack.io/gateway-bridge/install/config/ for a full
 # configuration example and documentation.
 
+# [integration]
+#  Payload marshaler.
+#
+#  This defines how the MQTT payloads are encoded. Valid options are:
+#  * protobuf:  Protobuf encoding
+#  * json:      JSON encoding (for debugging)
+# marshaler="protobuf"
+
 [integration.mqtt.auth.generic]
 servers=["tcp://$MQTT_BROKER_HOST:1883"]
 username="$MQTT_USER"
 password="$MQTT_PASS"
 
-[integration.mqtt]
-event_topic_template="eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
-state_topic_template="eu868/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
-command_topic_template="eu868/gateway/{{ .GatewayID }}/command/#"
+# [integration.mqtt]
+# event_topic_template="eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
+# state_topic_template="eu868/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
+# command_topic_template="eu868/gateway/{{ .GatewayID }}/command/#"
