@@ -1,0 +1,7 @@
+{
+  "CN": "Chirpstack CA",
+  "key": {
+    "algo": "rsa",
+    "size": 4096
+  }
+}

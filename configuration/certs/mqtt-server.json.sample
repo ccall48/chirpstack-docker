@@ -1,0 +1,11 @@
+{
+    "CN": "example.com",
+    "hosts": [
+        "example.com",
+        "mqtt.example.com"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 4096
+    }
+}
